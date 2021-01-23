@@ -29,7 +29,7 @@ class CommentControllerTest {
     }
 
     @Test
-    public void testSumForFailur() throws InterruptedException {
+    public void testSumForFailur() {
         CommentController commentController = new CommentController();
         int successAdd = 0;
         for (int i = 0; i < 1000; i++) {

@@ -25,4 +25,13 @@ public class NotificationService {
     public void deleteNotification(NotificationEntity notificationEntity) {
         notificationRepository.delete(notificationEntity);
     }
+
+    public Object getNotificationByCommentID(int id) {
+        return notificationRepository.findById(id);
+    }
+
+    public NotificationEntity getNotificationByTime(java.sql.Timestamp time) {
+        return notificationRepository.findByTime(time).orElse(null);
+    }
+
 }

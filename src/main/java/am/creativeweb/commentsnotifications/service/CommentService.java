@@ -26,4 +26,12 @@ public class CommentService {
         commentRepository.delete(commentEntity);
     }
 
+    public CommentEntity getCommentByID(int id){
+        return commentRepository.findById(id).orElse(null);
+    }
+
+    public CommentEntity getCommentByCommentAndTime(String com, java.sql.Timestamp time){
+        return commentRepository.findByCommentAndTime(com, time).orElse(null);
+    }
+
 }

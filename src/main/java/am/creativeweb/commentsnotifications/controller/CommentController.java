@@ -59,4 +59,30 @@ public class CommentController {
         }
         return entity;
     }
+
+    public CommentEntity saveComment(CommentEntity commentEntity, CommentService commentService, NotificationService notificationService) {
+        CommentEntity entity = commentService.addComment(commentEntity);
+        NotificationEntity notificationEntity = new NotificationEntity();
+        if (entity != null) {
+            try {
+                notificationEntity.setComment_id(entity.getComment_id());
+                notificationService.addNotification(notificationEntity);
+                BusinessLogic.doSomeWorkOnCommentCreation();
+            } catch (RuntimeException e) {
+                commentService.deleteComment(entity);
+                notificationService.deleteNotification(notificationEntity);
+                e.printStackTrace();
+                return  null;
+            }
+            try {
+                BusinessLogic.doSomeWorkOnNotification();
+            } catch (RuntimeException e) {
+                notificationEntity.setDelivered(false);
+                notificationService.addNotification(notificationEntity);
+                e.printStackTrace();
+            }
+        }
+        return entity;
+    }
+
 }
